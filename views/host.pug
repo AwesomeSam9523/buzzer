@@ -14,6 +14,7 @@ html
         each buzz in buzzes
           li=`${buzz.name} on Team ${buzz.team}`
       button.js-clear='Clear buzzes'
+      button.js-lock='Unlock Buzzers 🔓'
 
     script(src='/socket.io/socket.io.js')
     script(src='/host.js')

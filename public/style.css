@@ -141,3 +141,9 @@ button:focus {
 .secondary:hover {
   background-color: rgb(44, 75, 255);
 }
+
+.disabled {
+    background-color: #fff !important;
+    color: #B8B8B8 !important;
+    cursor: not-allowed;
+}

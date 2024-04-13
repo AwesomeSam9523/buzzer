@@ -12,7 +12,7 @@ let data = {
   users: new Set(),
   buzzes: new Set(),
 }
-
+let locked = true;
 const getData = () => ({
   users: [...data.users],
   buzzes: [...data.buzzes].map(b => {
@@ -35,6 +35,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on('buzz', (user) => {
+    if (locked) return;
     data.buzzes.add(`${user.name}-${user.team}`)
     io.emit('buzzes', [...data.buzzes])
     console.log(`${user.name} buzzed in!`)
@@ -45,6 +46,13 @@ io.on('connection', (socket) => {
     io.emit('buzzes', [...data.buzzes])
     console.log(`Clear buzzes`)
   })
+
+  socket.on('lock', () => {
+    locked = !locked;
+    io.emit('locked', locked)
+    console.log(`${locked ? 'locked' : 'unlocked'} buzzes`)
+  })
+
 })
 
 server.listen(8090, () => console.log('Listening on 8090'))

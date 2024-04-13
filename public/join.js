@@ -3,6 +3,8 @@ const body = document.querySelector('.js-body')
 const form = document.querySelector('.js-join')
 const joined = document.querySelector('.js-joined')
 const buzzer = document.querySelector('.js-buzzer')
+buzzer.disabled = true;
+buzzer.classList.add('disabled');
 const joinedInfo = document.querySelector('.js-joined-info')
 const editInfo = document.querySelector('.js-edit')
 
@@ -35,7 +37,19 @@ form.addEventListener('submit', (e) => {
 })
 
 buzzer.addEventListener('click', (e) => {
+  if (buzzer.disabled) return;
   socket.emit('buzz', user)
+})
+
+socket.on('locked', (data) => {
+  console.log('locked', data);
+  if (data) {
+    buzzer.disabled = true;
+    buzzer.classList.add('disabled');
+  } else {
+    buzzer.disabled = false;
+    buzzer.classList.remove('disabled');
+  }
 })
 
 editInfo.addEventListener('click', () => {
